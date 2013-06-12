@@ -10,7 +10,7 @@ subeconomy.py
 
 In the IPython notebook, executing 
 
-%macro -q  MakeSubEconData  https://github.com/appmathdoc/IPNmacros/subeconomy.py
+%macro -q  MakeSubEconData  https://github.com/appmathdoc/IPNmacros/raw/subeconomy.py
 
 generates a macro called MakeSubEconData, which upon execution creates simulated data and loads it as a pandas dataframe.
 
