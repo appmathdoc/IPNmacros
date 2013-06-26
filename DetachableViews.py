@@ -141,7 +141,7 @@ def View( tmp ):
             HtmlString += '<tr><td><b> %s </b></td> ' % idx
             for col in tmp.columns:
                 entry = tmp[col][idx]
-                if(type(entry) in [ float, numpy.float16, numpy.float32, numpy.float64,  numpy.float96 ]  ): 
+                if(type(entry) in [ float, numpy.float16, numpy.float32, numpy.float64 ]  ): 
                     entry = round(entry,5)
                 elif(type(entry)==complex):
                     entry = cround(entry,5)
@@ -156,7 +156,7 @@ def View( tmp ):
             HtmlString += "<tr>"
             for nme in tmp.dtype.names:
                 entry = tmp[nme][row]
-                if( type(entry)  in [ float, numpy.float16, numpy.float32, numpy.float64,  numpy.float96 ] ):
+                if( type(entry)  in [ float, numpy.float16, numpy.float32, numpy.float64 ] ):
                     entry = round(entry,5)
                 elif(type(entry)==complex):
                     entry = cround(entry,5)
@@ -168,14 +168,14 @@ def View( tmp ):
             for col in range(ncols):
                 if(len(tmp.shape) > 1 ):
                     entry = tmp[row,col]
-                    if(type(entry)  in [ float, numpy.float16, numpy.float32, numpy.float64,  numpy.float96 ] ):
+                    if(type(entry)  in [ float, numpy.float16, numpy.float32, numpy.float64 ] ):
                         entry = round(entry,5)
                     elif(type(entry)==complex):
                         entry = cround(entry,5)
                     HtmlString += '<td> %s </td> ' % entry
                 else:
                     entry = tmp[col]
-                    if( type(entry) in [ float, numpy.float16, numpy.float32, numpy.float64,  numpy.float96 ] ):
+                    if( type(entry) in [ float, numpy.float16, numpy.float32, numpy.float64  ] ):
                         entry = round(entry,5)
                     elif(type(entry)==complex):
                         entry = cround(entry,5)
