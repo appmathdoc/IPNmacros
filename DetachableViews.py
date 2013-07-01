@@ -333,6 +333,6 @@ def View( DataFrameOrArray ):
     
     HtmlString += "  </table></div> " 
     return  FramesAndArrays.HTMLView(HtmlString, width = wdth, height=hght)
- 
- HTML(""" The <b>DetachableView</b> class is ready <br>
+
+HTML(""" The <b>DetachableView</b> class is ready <br>
          The <b>View</b> function is ready """ )
