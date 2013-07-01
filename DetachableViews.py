@@ -150,12 +150,30 @@ except:
 
 def FormatForView( entry ): 
     "entry -> nice representation for this object"
-    if( type(entry)  in  [ float, numpy.float16, numpy.float32, numpy.float64 ] ):
-        entry = round(entry,Precision)        
-    elif( type(entry) in [ complex, numpy.complex64, numpy.complex128 ] ):
-        entry = cround(entry,Precision)
-        entry = " %s + %s %s" % (entry.real, entry.imag, ComplexUnitString)
-    return entry 
+    
+    try:
+        if(entry.dtype.kind in typecodes['AllFloat'] ):
+            entry = round(entry,Precision)
+        elif( entry.imag != 0):
+            if( entry.real == 0):
+                entry = " %s %s " % (round( entry.imag,Precision), ComplexUnitString )
+            else:
+                entry = cround(entry,Precision)
+                entry = " %s + %s %s" % (entry.real, entry.imag, ComplexUnitString)
+        elif( entry.dtype.kind in typecodes['Complex']+'c' ):
+            entry = round(entry.real,Precision)
+        return entry
+    except:
+        try:
+            if( entry.imag != 0):
+                if( entry.real == 0):
+                    entry = " %s %s " % (round( entry.imag,Precision), ComplexUnitString )
+                else:
+                    entry = cround(entry,Precision)
+                    entry = " %s + %s %s" % (entry.real, entry.imag, ComplexUnitString)
+            return entry
+        except:
+            return entry
 
 
 def View( DataFrameOrArray ):
