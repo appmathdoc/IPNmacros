@@ -345,7 +345,7 @@ def View( DataFrameOrArray ):
     <div> <b id =  "bcap" > %s  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | </b>
             &nbsp; &nbsp; &nbsp; &nbsp; %s  <sub> &nbsp; </sub> <br>  
         <table border=1 >
-            <caption> Size: %s  &nbsp;&nbsp;&nbsp;&nbsp; Type(s): %s   </caption>
+            <caption> shape: %s  &nbsp;&nbsp;&nbsp;&nbsp; Type(s): %s   </caption>
     """  % ( nme, typ, shp, dtp ) 
     
     # Create HTML5 table of given structure -- lots of details, but mainly iterating over rows and
