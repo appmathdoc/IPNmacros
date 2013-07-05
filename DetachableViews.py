@@ -5,6 +5,7 @@
 from __future__ import division
 from IPython.display import HTML
 
+
 class DetachableView:
     "ONLY DOUBLE QUOTES PERMITTED IN HTMLview -- use &apos; for single quotes"
     def __init__(my, PostType = "OneWay" ): #PostType is for later
@@ -34,7 +35,7 @@ class DetachableView:
         if( toggle):
             HtmlString += """
 
-               <script type='text/javascript'>
+                <script type='text/javascript'>
                     var win;
                     var messageHandler%s ;
                     var MessageRepeater%s ;
@@ -45,18 +46,16 @@ class DetachableView:
                     """ % (fcntr, fcntr, fcntr, fcntr, URL, fcntr ) 
             if( message != None):
                 HtmlString += """
-                            MessageRepeater%s = setInterval( function() {
-                                win.postMessage('%s', '*' ) ;
-                            },100);
-        
-                             messageHandler%s = function(event){
+                            messageHandler%s = function(event){
+                                if( event.data == 'ready' ) { 
+                                    win.postMessage('%s', '*' ) ;
+                                }
                                 if( event.data == 'done'  ) {
-                                    clearInterval( MessageRepeater%s );
                                     window.removeEventListener('message',arguments.callee,false)
                                 }
                             }
                             window.addEventListener('message',messageHandler%s, false);
-                  """ %(fcntr, message, fcntr, fcntr, fcntr)
+                  """ %(fcntr, message, fcntr )
 
             HtmlString += """
                         iFrame.style.display = 'none'
@@ -182,6 +181,7 @@ class DetachableView:
                 Your browser does not support iframes </iframe> 
             """ % ( fcntr, HTMLCode, HTMLJS, width, height)
         return HTML(HtmlString)
+        
 
 ## View -- for tables, etc. 
 
@@ -194,7 +194,6 @@ try:
     cround
 except:
     def cround(z,n=5): return complex(round(z.real,n), round(z.imag,n)) 
-
 
 
 def FormatForView( entry ): 
@@ -265,7 +264,7 @@ def View( DataFrameOrArray ):
     
     """
     
-    # Is this a data frame (based on existence of column/index options
+    # Is this a data frame (based on existence of column/index lists 
     IsDF = False
     try: 
         DataFrameOrArray[DataFrameOrArray.columns[0]][DataFrameOrArray.index[0]]
