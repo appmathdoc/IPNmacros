@@ -538,7 +538,7 @@ def ViewDecisionTree( decision_tree, feature_names=None):
     out_file = export_json(clf, out_file=output)
     msg = out_file.getvalue()
     out_file.close()
-    return D3JSViewer.URLView( TheHTML, 'http://math.etsu.edu/knisleyj/scripts/DecisionTreeViewer.html', message = msg, width = "100%")    
+    return FramesAndArrays.URLView( TheHTML, 'http://math.etsu.edu/knisleyj/scripts/DecisionTreeViewer.html', message = msg, width = "100%")    
 
 
     
