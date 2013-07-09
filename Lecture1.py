@@ -458,10 +458,10 @@ for i in range(5):
     
 UnclassifiedObservations = array( Unclassified ) 
 
+figsize(7,5)
 
 
-
-HTML(""" The <b>View</b> function for viewing data sets is ready <br>
+HTML(""" <p>The <b>View</b> function for viewing data sets is ready </p> <br/>
         <p>The <b>Positives</b> and <b>Negatives</b> data sets have been 
         generated, as well as the <b>UnclassifiedObservations</b> data
      """ )
