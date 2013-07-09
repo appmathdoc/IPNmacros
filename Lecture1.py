@@ -451,10 +451,10 @@ Negatives = array( Negatives )
 
 Unclassified = []
 
-for i in range(5):
+for i in range(10):
     x = APM.rand()*5
     y = ( ( m*x+b1 + APM.rand()*5.0 )+( m*x+b2 - APM.rand()*5.0 ) )/2.0
-    Unclassified.append( (x,y) )
+    Unclassified.append( (x,y+APM.randint(-1,2)) )
     
 UnclassifiedObservations = array( Unclassified ) 
 
