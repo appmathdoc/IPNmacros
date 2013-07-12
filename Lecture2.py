@@ -457,7 +457,22 @@ AnimalNames = [ "aardvark","alligator","alpaca","anteater","antelope","aoudad","
                 "squirrel","stallion","steer","tapir","tiger","toad","turtle","vicuna","walrus","warthog","waterbuck","weasel","whale","wildcat","wolf","wolverine",
                 "wombat","woodchuck","yak","zebra"]
 
+def GraphFromCriteria(Vertices,CriteriaFunction):
+    """GraphFromCriteria(Vertices,CriteriaFunction) -> networkx.Graph object
+    
+    The CriteriaFunction takes as arguments two vertices and returns 
+    a boolean (either True or False).  If True, then edge is added to the 
+    Graph
+    """
+    G = networkx.Graph()
+    
+    for i in range(len(Vertices)):
+        for j in range(i+1,len(Vertices)):
+            if( CriteriaFunction( Vertices[i],Vertices[j] ) ):
+                G.add_edge(Vertices[i],Vertices[j])
+    return G
 
+                
 def SubeconomyProblem(Username):
     'Returns Subeconomy Problem Data'
     
