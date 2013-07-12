@@ -557,7 +557,7 @@ try:
     Assignment1 = DataFrame( ASSN1, index = HouseholdNames, columns = Businesses)
     msg = "<b>Assignment1</b> is now loaded<br/>"
 except:
-    msg = "<b style = 'font-size:larger'>ERROR:</b><b>Assignment1</b> did not load!<br/>"
+    msg = "<b style = 'font-size:larger;color:red;'>ERROR:</b><b>Assignment1</b> did not load!<br/>"
     print("Unable to produce the Assignment1 data.  Did you enter your username?")
 
 
