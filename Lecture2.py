@@ -555,7 +555,9 @@ try:
         raise 
     ASSN1, ASSN1key = SubeconomyProblem(username)
     Assignment1 = DataFrame( ASSN1, index = HouseholdNames, columns = Businesses)
+    msg = <b>Assignment1</b> is now loaded<br/>"
 except:
+    msg = "<b style = 'font-size:larger'>ERROR:</b><b>Assignment1</b> did not load!<br/>
     print("Unable to produce the Assignment1 data.  Did you enter your username?")
 
 
@@ -594,11 +596,11 @@ def Grade(Candidate, IsExample = False):
     return HTML(msgString+"</div>")
 
 HTML("""    
-    <p>The __View__ command can be used to produce detachable views of data sets</p>
+    <p>The <b>View</b> command can be used to produce detachable views of data sets</p>
     <p><b>SmallTownData</b> is now loaded <br/>
-    <b>Assignment1</b> is now loaded<br/>
+    %s
     <b>HouseholdNames</b> and <b>Businesses</b> are loaded as lists of strings</p>
     <p>The <b>Grade</b> command allows you to determine the grade that your candidate <br/> solution would receive if submitted</p>
     <p>See course information (at course website) for details on grading</p>
-    """)
+    """ % msg)
     
