@@ -611,7 +611,9 @@ def Grade(Candidate, IsExample = False):
     return HTML(msgString+"</div>")
 
 HTML("""    
-    <p>The <b>View</b> command can be used to produce detachable views of data sets</p>
+    <p>The <b>View</b> command can be used to produce detachable views of data sets<br/>
+       The <b>GraphFromCriteria</b> can be used to create a Networkx graph from a list of vertices and a criteria function.</p>
+    
     <p><b>SmallTownData</b> is now loaded <br/>
     %s
     <b>HouseholdNames</b> and <b>Businesses</b> are loaded as lists of strings</p>
