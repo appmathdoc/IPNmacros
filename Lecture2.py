@@ -609,6 +609,9 @@ def Grade(Candidate, IsExample = False):
     else:
         msgString += """<p>Good Job!</p>""" 
     return HTML(msgString+"</div>")
+    
+HouseholdNames = array(HouseholdNames)
+Businesses = array(Businesses)
 
 HTML("""    
     <p>The <b>View</b> command can be used to produce detachable views of data sets<br/>
@@ -616,7 +619,7 @@ HTML("""
     
     <p><b>SmallTownData</b> is now loaded <br/>
     %s
-    <b>HouseholdNames</b> and <b>Businesses</b> are loaded as lists of strings</p>
+    <b>HouseholdNames</b> and <b>Businesses</b> are loaded as arrays of strings</p>
     <p>The <b>Grade</b> command allows you to determine the grade that your candidate <br/> solution would receive if submitted</p>
     <p>See course information (at course website) for details on grading</p>
     """ % msg)
