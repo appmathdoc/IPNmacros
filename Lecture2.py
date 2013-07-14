@@ -562,7 +562,7 @@ def SubeconomyProblem(Username):
         
     return Data, [ HouseholdNames[i] for i in SubEconomy]
 
-FstEx, FstExkey = SubeconomyProblem('Lecture')
+FstEx, FstExkey = SubeconomyProblem('Lecture2')
 SmallTownData = DataFrame( FstEx, index = HouseholdNames, columns = Businesses)
 
 try:
