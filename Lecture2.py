@@ -482,13 +482,13 @@ def SubeconomyProblem(Username):
     ## Make a Subeconomy
     SubEconomy = []
     All = [i for i in range(250)]
-    for i in range(APM.randint(50,80)):
+    for i in range(APM.randint(50,80)): #Size of Subeconomy
         SubEconomy.append( All.pop( APM.randint(len(All)) ) )
     
     Se = SubEconomy[0]
     
     for j in SubEconomy:
-        Data[j,1:21] = Data[Se,1:21]
+        Data[j,:] = Data[Se,:]
     
     ## Two Income Households  
     for i in range(250):
