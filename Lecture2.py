@@ -554,8 +554,8 @@ def SubeconomyProblem(Username):
                 inds.append(j) 
            if( Data[i,j] > 0 ):
                 inc = j
-        tmp1 = -10*APM.randint(1,4)
-        tmp2 = -10*APM.randint(1,4)
+        tmp1 = -10*APM.randint(3,8)
+        tmp2 = -10*APM.randint(3,8)
         Data[i,inds.pop( APM.randint(len(inds) ) ) ] = tmp1  
         Data[i,inds.pop( APM.randint(len(inds) ) ) ] = tmp2
         Data[i,inc] += -(tmp1+tmp2)
