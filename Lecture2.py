@@ -304,7 +304,7 @@ def View( DataFrameOrArray ):
         
     # Not too small, but after height = 35em, scrollbars
     hght = "%sem" % max(  8, min( 2*nrows+8, 35 ))
-    if( ncols < 10):
+    if( ncols < 8):
         wdth = "50%" 
     else:
         wdth = "95%"
