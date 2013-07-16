@@ -302,9 +302,12 @@ def View( DataFrameOrArray ):
     else:
         nrows, ncols = DataFrameOrArray.shape
         
-    # Not too small, but after height = 40em, wdth = 80 em, scrollbars
-    hght = "%sem" % max(  8, min( 2*nrows+8, 40 ))
-    wdth = "%sem" % max( 40, min( 4*ncols+4, 80 ))
+    # Not too small, but after height = 35em, scrollbars
+    hght = "%sem" % max(  8, min( 2*nrows+8, 35 ))
+    if( ncols < 10):
+        wdth = "50%" 
+    else:
+        wdth = "95%"
     
     # Create header info for the 3 types -- array, Structured Array, DataFrame
     if( IsDF ):
