@@ -302,12 +302,9 @@ def View( DataFrameOrArray ):
     else:
         nrows, ncols = DataFrameOrArray.shape
         
-    # Not too small, but after height = 35em, scrollbars
-    hght = "%sem" % max(  8, min( 2*nrows+8, 35 ))
-    if( ncols < 8):
-        wdth = "50%" 
-    else:
-        wdth = "95%"
+    # Not too small, but after height = 40em, wdth = 80 em, scrollbars
+    hght = "%sem" % max(  8, min( 2*nrows+8, 40 ))
+    wdth = "%sem" % max( 40, min( 4*ncols+4, 80 ))
     
     # Create header info for the 3 types -- array, Structured Array, DataFrame
     if( IsDF ):
@@ -460,22 +457,7 @@ AnimalNames = [ "aardvark","alligator","alpaca","anteater","antelope","aoudad","
                 "squirrel","stallion","steer","tapir","tiger","toad","turtle","vicuna","walrus","warthog","waterbuck","weasel","whale","wildcat","wolf","wolverine",
                 "wombat","woodchuck","yak","zebra"]
 
-def GraphFromCriteria(Vertices,CriteriaFunction):
-    """GraphFromCriteria(Vertices,CriteriaFunction) -> networkx.Graph object
-    
-    The CriteriaFunction takes as arguments two vertices and returns 
-    a boolean (either True or False).  If True, then edge is added to the 
-    Graph
-    """
-    G = networkx.Graph()
-    
-    for i in range(len(Vertices)):
-        for j in range(i+1,len(Vertices)):
-            if( CriteriaFunction( Vertices[i],Vertices[j] ) ):
-                G.add_edge(Vertices[i],Vertices[j])
-    return G
 
-                
 def SubeconomyProblem(Username):
     'Returns Subeconomy Problem Data'
     
@@ -485,13 +467,13 @@ def SubeconomyProblem(Username):
     ## Make a Subeconomy
     SubEconomy = []
     All = [i for i in range(250)]
-    for i in range(APM.randint(50,80)): #Size of Subeconomy
+    for i in range(APM.randint(50,80)):
         SubEconomy.append( All.pop( APM.randint(len(All)) ) )
     
     Se = SubEconomy[0]
     
     for j in SubEconomy:
-        Data[j,:] = Data[Se,:]
+        Data[j,1:21] = Data[Se,1:21]
     
     ## Two Income Households  
     for i in range(250):
@@ -557,15 +539,15 @@ def SubeconomyProblem(Username):
                 inds.append(j) 
            if( Data[i,j] > 0 ):
                 inc = j
-        tmp1 = -10*APM.randint(3,8)
-        tmp2 = -10*APM.randint(3,8)
+        tmp1 = -10*APM.randint(1,4)
+        tmp2 = -10*APM.randint(1,4)
         Data[i,inds.pop( APM.randint(len(inds) ) ) ] = tmp1  
         Data[i,inds.pop( APM.randint(len(inds) ) ) ] = tmp2
         Data[i,inc] += -(tmp1+tmp2)
         
     return Data, [ HouseholdNames[i] for i in SubEconomy]
 
-FstEx, FstExkey = SubeconomyProblem('Lecture2')
+FstEx, FstExkey = SubeconomyProblem('firstexample')
 SmallTownData = DataFrame( FstEx, index = HouseholdNames, columns = Businesses)
 
 try:
@@ -573,9 +555,7 @@ try:
         raise 
     ASSN1, ASSN1key = SubeconomyProblem(username)
     Assignment1 = DataFrame( ASSN1, index = HouseholdNames, columns = Businesses)
-    msg = "<b>Assignment1</b> is now loaded<br/>"
 except:
-    msg = "<b style = 'font-size:larger;color:red;'>ERROR:</b> <b>Assignment1</b> did not load!<br/>"
     print("Unable to produce the Assignment1 data.  Did you enter your username?")
 
 
@@ -612,18 +592,96 @@ def Grade(Candidate, IsExample = False):
     else:
         msgString += """<p>Good Job!</p>""" 
     return HTML(msgString+"</div>")
-    
-HouseholdNames = array(HouseholdNames)
-Businesses = array(Businesses)
 
 HTML("""    
-    <p>The <b>View</b> command can be used to produce detachable views of data sets<br/>
-       The <b>GraphFromCriteria</b> can be used to create a Networkx graph from a list of vertices and a criteria function.</p>
-    
+    <p>The __View__ command can be used to produce detachable views of data sets</p>
     <p><b>SmallTownData</b> is now loaded <br/>
-    %s
-    <b>HouseholdNames</b> and <b>Businesses</b> are loaded as arrays of strings</p>
+    <b>Assignment1</b> is now loaded<br/>
+    <b>HouseholdNames</b> and <b>Businesses</b> are loaded as lists of strings</p>
     <p>The <b>Grade</b> command allows you to determine the grade that your candidate <br/> solution would receive if submitted</p>
     <p>See course information (at course website) for details on grading</p>
-    """ % msg)
+    """)
+
+formtext = """
+<head>
+<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=10; chrome=1;">
+<meta name="fragment" content="!">
+<base target="_blank">
+<title>Lecture2Submission</title>
+</head>
+<body>
+
+<form action="https://docs.google.com/forms/d/1te99_xl4v54l7fDzPsXQ-urKAD0xruavxk4t3UMTdBU/formResponse" method="POST" id="ss-form" target="_self" onsubmit="">
+	<p>
+		Enter your username (just username, not entire email address):<br/>
+		<input type="text" name="entry.1669260781" value="%s" id="entry_1669260781" >
+	</p>
+	<p>
+		Enter your answer as a comma separated list (square brackets optional). <br/>
+		<input type="text" name="entry.769226310" value="%s" class="ss-q-short" id="entry_769226310" >
+
+	</p>
+	<p>
+		The following is the validation code generated from the enumber E%s.  <br/>
+		<input type="text" name="entry.65036768" value="%s" class="ss-q-short" id="entry_65036768" readonly >
+	</p>
+	<p>
+		<input type="hidden" name="draftResponse" value="[]">
+		<input type="hidden" name="pageHistory" value="0">
+		<input type="submit" name="submit" value="Submit" >
+	</p>
+</form>
+</body>
+"""
+
+def Submit(Enumber,Answer):
+    "Submit(Enumber,Answer) -> Submission form as popup"
+    global username, formtext
     
+    if( Enumber[0]=="E" or Enumber[0]=="e" ): #remove the "E"
+        Enumber = Enumber[1:]
+    
+    #Create Validation
+    SBM = LcgRand( hash(Enumber) )
+    Validation = SBM.randint(0,100000,100)[99]
+    
+    #Format The Answer as comma separated values
+    ans = ''
+    for a in Answer:
+        ans += '%s, ' % a
+    ans = ans[:-2]
+    
+    FormWithEntries = formtext % (username, ans, Enumber, Validation)
+    
+    #Split into lines for the win_doc.writeln commands
+    HTMLlist = FormWithEntries.split('\n')  
+        
+    HTMLtext = "' '"
+    for line in HTMLlist:
+        HTMLtext += ", '%s' " % line
+ 
+    HtmlString  = """
+           <script type='text/javascript'> 
+                function LaunchForm() {
+                   var iStringArray = [ %s ]
+                   var win = window.open('about:blank', 'SubmissionForm' ,'height=500,width=800,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes');
+                   var win_doc = win.document;
+                   win_doc.open();
+                   win_doc.writeln('<!DOCTYPE HTML PUBLIC "-//W3C//DTD HT'+'ML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd"><htm' + 'l>');
+                   for (var i = 0; i < iStringArray.length; i++) {
+                       win_doc.writeln( iStringArray[i] );
+                   };
+                   win_doc.writeln('</ht' + 'ml>');
+                   win_doc.close();
+                }
+           </script>
+           <p>You have entered </p>
+           <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Username:</b> %s </p>
+           <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Enumber:</b>  %s </p>
+           <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Answer:</b> %s </p>
+           <p>If this is correct, click on the button below: </p>
+           <input type='button' value='Launch Submission Form' onclick='LaunchForm()'> 
+        """ % ( HTMLtext, username, Enumber, ans)
+               
+    return HTML(HtmlString)
