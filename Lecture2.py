@@ -5,6 +5,7 @@
 from __future__ import division
 from IPython.display import HTML
 from pandas import DataFrame
+import networkx
 
 
 class DetachableView:
@@ -709,6 +710,7 @@ HTML("""
     %s
     <b>HouseholdNames</b> and <b>Businesses</b> are loaded as arrays of strings</p>
     <p>The <b>Grade</b> command allows you to determine the grade that your candidate <br/> solution would receive if submitted</p>
+    <p>The <b>Submit</b> command allows you to submit your answer. </p>
     <p>See course information (at course website) for details on grading</p>
     """ % msg)
     
