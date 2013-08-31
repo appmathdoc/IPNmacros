@@ -481,7 +481,7 @@ def SubeconomyProblem(Username):
     'Returns Subeconomy Problem Data'
     
     if( Username == 'Lecture2'):
-        APM = LcgRand( -2047899040 )
+        APM = LcgRand( -685032576 )
     else:
         APM = LcgRand( hash( Username.lower() ) )
     Data = APM.randint(0,2,(250,20))
