@@ -593,6 +593,90 @@ def Grade(Candidate, IsExample = False):
         msgString += """<p>Good Job!</p>""" 
     return HTML(msgString+"</div>")
 
+formtext = """
+<head>
+<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=10; chrome=1;">
+<meta name="fragment" content="!">
+<base target="_blank">
+<title>Lecture2Submission</title>
+</head>
+<body>
+
+<form action="https://docs.google.com/forms/d/1te99_xl4v54l7fDzPsXQ-urKAD0xruavxk4t3UMTdBU/formResponse" method="POST" id="ss-form" target="_self" onsubmit="">
+	<p>
+		Enter your username (just username, not entire email address):<br/>
+		<input type="text" name="entry.1669260781" value="%s" id="entry_1669260781" >
+	</p>
+	<p>
+		Enter your answer as a comma separated list (square brackets optional). <br/>
+		<input type="text" name="entry.769226310" value="%s" class="ss-q-short" id="entry_769226310" >
+
+	</p>
+	<p>
+		The following is the validation code generated from the enumber E%s.  <br/>
+		<input type="text" name="entry.65036768" value="%s" class="ss-q-short" id="entry_65036768" readonly >
+	</p>
+	<p>
+		<input type="hidden" name="draftResponse" value="[]">
+		<input type="hidden" name="pageHistory" value="0">
+		<input type="submit" name="submit" value="Submit" >
+	</p>
+</form>
+</body>
+"""
+
+def Submit(Enumber,Answer):
+    "Submit(Enumber,Answer) -> Submission form as popup"
+    global username, formtext
+    
+    if( Enumber[0]=="E" or Enumber[0]=="e" ): #remove the "E"
+        Enumber = Enumber[1:]
+    
+    #Create Validation
+    SBM = LcgRand( hash(Enumber) )
+    Validation = SBM.randint(0,100000,100)[99]
+    
+    #Format The Answer as comma separated values
+    ans = ''
+    for a in Answer:
+        ans += '%s, ' % a
+    ans = ans[:-2]
+    
+    FormWithEntries = formtext % (username, ans, Enumber, Validation)
+    
+    #Split into lines for the win_doc.writeln commands
+    HTMLlist = FormWithEntries.split('\n')  
+        
+    HTMLtext = "' '"
+    for line in HTMLlist:
+        HTMLtext += ", '%s' " % line
+ 
+    HtmlString  = """
+           <script type='text/javascript'> 
+                function LaunchForm() {
+                   var iStringArray = [ %s ]
+                   var win = window.open('about:blank', 'SubmissionForm' ,'height=500,width=800,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes');
+                   var win_doc = win.document;
+                   win_doc.open();
+                   win_doc.writeln('<!DOCTYPE HTML PUBLIC "-//W3C//DTD HT'+'ML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd"><htm' + 'l>');
+                   for (var i = 0; i < iStringArray.length; i++) {
+                       win_doc.writeln( iStringArray[i] );
+                   };
+                   win_doc.writeln('</ht' + 'ml>');
+                   win_doc.close();
+                }
+           </script>
+           <p>You have entered </p>
+           <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Username:</b> %s </p>
+           <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Enumber:</b>  %s </p>
+           <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Answer:</b> %s </p>
+           <p>If this is correct, click on the button below: </p>
+           <input type='button' value='Launch Submission Form' onclick='LaunchForm()'> 
+        """ % ( HTMLtext, username, Enumber, ans)
+               
+    return HTML(HtmlString)
+
 HTML("""    
     <p>The __View__ command can be used to produce detachable views of data sets</p>
     <p><b>SmallTownData</b> is now loaded <br/>
