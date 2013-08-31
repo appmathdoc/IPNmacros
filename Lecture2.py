@@ -302,9 +302,12 @@ def View( DataFrameOrArray ):
     else:
         nrows, ncols = DataFrameOrArray.shape
         
-    # Not too small, but after height = 40em, wdth = 80 em, scrollbars
-    hght = "%sem" % max(  8, min( 2*nrows+8, 40 ))
-    wdth = "%sem" % max( 40, min( 4*ncols+4, 80 ))
+    # Not too small, but after height = 35em, scrollbars
+    hght = "%sem" % max(  8, min( 2*nrows+8, 35 ))
+    if( ncols < 8):
+        wdth = "50%" 
+    else:
+        wdth = "95%"
     
     # Create header info for the 3 types -- array, Structured Array, DataFrame
     if( IsDF ):
@@ -458,6 +461,21 @@ AnimalNames = [ "aardvark","alligator","alpaca","anteater","antelope","aoudad","
                 "wombat","woodchuck","yak","zebra"]
 
 
+def GraphFromCriteria(Vertices,CriteriaFunction):
+    """GraphFromCriteria(Vertices,CriteriaFunction) -> networkx.Graph object
+    
+    The CriteriaFunction takes as arguments two vertices and returns 
+    a boolean (either True or False).  If True, then edge is added to the 
+    Graph
+    """
+    G = networkx.Graph()
+    
+    for i in range(len(Vertices)):
+        for j in range(i+1,len(Vertices)):
+            if( CriteriaFunction( Vertices[i],Vertices[j] ) ):
+                G.add_edge(Vertices[i],Vertices[j])
+    return G
+            
 def SubeconomyProblem(Username):
     'Returns Subeconomy Problem Data'
     
@@ -467,13 +485,13 @@ def SubeconomyProblem(Username):
     ## Make a Subeconomy
     SubEconomy = []
     All = [i for i in range(250)]
-    for i in range(APM.randint(50,80)):
+    for i in range(APM.randint(50,80)): #Size of Subeconomy
         SubEconomy.append( All.pop( APM.randint(len(All)) ) )
     
     Se = SubEconomy[0]
     
     for j in SubEconomy:
-        Data[j,1:21] = Data[Se,1:21]
+        Data[j,:] = Data[Se,:]
     
     ## Two Income Households  
     for i in range(250):
@@ -539,8 +557,8 @@ def SubeconomyProblem(Username):
                 inds.append(j) 
            if( Data[i,j] > 0 ):
                 inc = j
-        tmp1 = -10*APM.randint(1,4)
-        tmp2 = -10*APM.randint(1,4)
+        tmp1 = -10*APM.randint(3,8)
+        tmp2 = -10*APM.randint(3,8)
         Data[i,inds.pop( APM.randint(len(inds) ) ) ] = tmp1  
         Data[i,inds.pop( APM.randint(len(inds) ) ) ] = tmp2
         Data[i,inc] += -(tmp1+tmp2)
@@ -555,9 +573,9 @@ try:
         raise 
     ASSN1, ASSN1key = SubeconomyProblem(username)
     Assignment1 = DataFrame( ASSN1, index = HouseholdNames, columns = Businesses)
-    msg = <b>Assignment1</b> is now loaded<br/>"
+    msg = "<b>Assignment1</b> is now loaded<br/>"
 except:
-    msg = "<b style = 'font-size:larger'>ERROR:</b><b>Assignment1</b> did not load!<br/>"
+    msg = "<b style = 'font-size:larger;color:red;'>ERROR:</b> <b>Assignment1</b> did not load!<br/>"
     print("Unable to produce the Assignment1 data.  Did you enter your username?")
 
 
@@ -595,7 +613,9 @@ def Grade(Candidate, IsExample = False):
         msgString += """<p>Good Job!</p>""" 
     return HTML(msgString+"</div>")
     
-## Form Submission
+HouseholdNames = array(HouseholdNames)
+Businesses = array(Businesses)
+
 formtext = """
 <head>
 <meta http-equiv="Content-type" content="text/html; charset=utf-8">
@@ -680,11 +700,14 @@ def Submit(Enumber,Answer):
                
     return HTML(HtmlString)
 
+
 HTML("""    
-    <p>The <b>View</b> command can be used to produce detachable views of data sets</p>
+    <p>The <b>View</b> command can be used to produce detachable views of data sets<br/>
+    The <b>GraphFromCriteria</b> can be used to create a Networkx graph from a list of vertices and a criteria function.</p>
+
     <p><b>SmallTownData</b> is now loaded <br/>
     %s
-    <b>HouseholdNames</b> and <b>Businesses</b> are loaded as lists of strings</p>
+    <b>HouseholdNames</b> and <b>Businesses</b> are loaded as arrays of strings</p>
     <p>The <b>Grade</b> command allows you to determine the grade that your candidate <br/> solution would receive if submitted</p>
     <p>See course information (at course website) for details on grading</p>
     """ % msg)
