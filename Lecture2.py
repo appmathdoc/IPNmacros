@@ -480,7 +480,10 @@ def GraphFromCriteria(Vertices,CriteriaFunction):
 def SubeconomyProblem(Username):
     'Returns Subeconomy Problem Data'
     
-    APM = LcgRand( hash( Username.lower() ) )
+    if( Username == 'Lecture2'):
+        APM = LcgRand( -2047899040 )
+    else:
+        APM = LcgRand( hash( Username.lower() ) )
     Data = APM.randint(0,2,(250,20))
     
     ## Make a Subeconomy
@@ -566,7 +569,7 @@ def SubeconomyProblem(Username):
         
     return Data, [ HouseholdNames[i] for i in SubEconomy]
 
-FstEx, FstExkey = SubeconomyProblem('firstexample')
+FstEx, FstExkey = SubeconomyProblem('Lecture2')
 SmallTownData = DataFrame( FstEx, index = HouseholdNames, columns = Businesses)
 
 try:
