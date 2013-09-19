@@ -904,16 +904,15 @@ def Impute(Data, kNNGraph, Method = IgnoringNan.mean):
     return Data    
 
     
-def Predict(Data, Unrated, kNNGraph, Method = mean, PrintPredictions = 0 ):
+def Predict(ImputedData, Unrated, kNNGraph, Method = mean, PrintPredictions = 0 ):
     """Predict(Data, Unrated, kNNGraph) -> Data with Unrated replaced by predictions from using Graph Neighborhoods
     
     Method: Any method which returns a number given an array
     """
     apd = False
-    if( Data.shape[0] == 250  ):
+    if( ImputedData.shape[0] == 250  ):
         apd = True
      
-    tmp = Data.as_matrix()
     Ratings = []
     
     for unr in Unrated:
@@ -922,13 +921,13 @@ def Predict(Data, Unrated, kNNGraph, Method = mean, PrintPredictions = 0 ):
         
         nbrs = kNNGraph.neighbors( unh );
         if(apd):
-            pred =  int( Method( array( [ tmp[nbr,una] for nbr in nbrs] ) ) )
+            pred =  int( Method( array( [ ImputedData[nbr,una] for nbr in nbrs] ) ) )
             if(PrintPredictions > 0):
                 PrintPredictions += -1
                 print( "Household %s is predicted give animal exhibit %s a rating of %s" %(unr[0], unr[1], pred ) )
             Ratings.append( (unr[0], unr[1], pred ) )
         else:
-            pred =  int( Method( array( [ tmp[una,nbr] for nbr in nbrs] ) ) )
+            pred =  int( Method( array( [ ImputedData[una,nbr] for nbr in nbrs] ) ) )
             if(PrintPredictions > 0 ):
                 PrintPredictions += -1
                 print( "Household %s is predicted give animal exhibit %s a rating of %s" %(unr[0], unr[1], pred ) )
