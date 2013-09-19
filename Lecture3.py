@@ -947,6 +947,6 @@ HTML("""
     <b>HouseholdNames</b> and <b>AnimalNames</b> are loaded as lists of strings</p>
     <p>The <b>Grade</b> command allows you to determine the grade that your candidate <br/> solution would receive if submitted</p>
     <p>See course information (at course website) for details on grading</p>
-    <p>More details on additional commands with
+    <p>More details on additional commands within the notebook as needed</p>
     """)
     
