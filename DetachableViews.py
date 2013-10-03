@@ -538,7 +538,7 @@ def ViewDecisionTree( decision_tree, feature_names=None):
 
     output = StringIO.StringIO()
     
-    out_file = export_json(clf, out_file=output)
+    out_file = export_json(clf, out_file=output, feature_names=feature_names)
     msg = out_file.getvalue()
     out_file.close()
     return FramesAndArrays.URLView( 'http://math.etsu.edu/knisleyj/scripts/DecisionTreeViewer.html', message = msg, width = "100%")    
